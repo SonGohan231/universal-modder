@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.18)
+project(um_android_bridge LANGUAGES CXX)
+add_executable(um_bridge_test test_bridge.cpp)
+target_compile_features(um_bridge_test PRIVATE cxx_std_17)
+target_compile_options(um_bridge_test PRIVATE -Wall -Wextra -Werror -UNDEBUG)
+enable_testing()
+add_test(NAME transport_contract COMMAND um_bridge_test)

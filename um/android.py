@@ -94,6 +94,12 @@ def _plan(args: argparse.Namespace) -> None:
 def register(sub) -> None:
     group = sub.add_parser("android", help="Static APK inspection and conservative Android game-fusion planning")
     actions = group.add_subparsers(dest="action")
+    from um.android_native import command, PROFILES
+    native = actions.add_parser("native-probe", help="Fingerprint ARM64 game libraries and inspect actual exports")
+    native.add_argument("profile", choices=PROFILES)
+    native.add_argument("apks", nargs="+")
+    native.add_argument("--readelf", default="readelf")
+    native.set_defaults(func=command)
     inspect = actions.add_parser("inspect", help="Read APK archive metadata without extraction or modification")
     inspect.add_argument("apk")
     inspect.add_argument("--json", action="store_true", help="Output JSON (default)")
